@@ -5,7 +5,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const contactRoutes = require('./routes/contactRoutes');
-const tripRouter = require('./routes/tripRoutes');
+const tripRoutes = require('./routes/tripRoutes');
 const itineraryRoutes = require('./routes/itineraryRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const weatherRoutes = require('./routes/weatherRoutes');
@@ -46,7 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes);
-app.use('/api/trip', tripRouter);
+app.use('/api/trip', tripRoutes);
 app.use('/api/itinerary', itineraryRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/weather', weatherRoutes);
@@ -64,7 +64,6 @@ app.use((err, req, res, next) => {
     error: process.env.NODE_ENV === "development" ? err.message : undefined,
   });
 });
-
 // 404 handler must be LAST
 app.use((req, res) => {
   res.status(404).json({ success: false, message: "Route not found" });
