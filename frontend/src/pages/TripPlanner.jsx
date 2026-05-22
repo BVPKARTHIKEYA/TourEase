@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   MapPin, Calendar, Users, DollarSign, Plane, 
   Hotel, Compass, Coffee, Camera, Mountain,
@@ -87,6 +88,7 @@ function ReviewItem({ icon, label, value }) {
 }
 
 export default function TripPlanner() {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     destination: '',
@@ -317,6 +319,27 @@ export default function TripPlanner() {
             >
               <ExternalLink className="w-5 h-5" /> View Dynamic Plan
             </button>
+            {isLoggedIn ? (
+              <button 
+                onClick={handleSaveItinerary} 
+                disabled={saving}
+                className="px-8 py-4 bg-teal-500 hover:bg-teal-600 disabled:bg-teal-400 text-white rounded-xl font-bold shadow-lg shadow-teal-500/30 flex items-center gap-2 transition"
+              >
+                <Sparkles className="w-5 h-5" />
+                {saving ? 'Saving...' : 'Save to My Trips'}
+              </button>
+            ) : (
+              <button 
+                onClick={() => {
+                  alert('Please sign in or register to save itineraries to your dashboard!');
+                  navigate('/login');
+                }} 
+                className="px-8 py-4 bg-teal-500 hover:bg-teal-600 text-white rounded-xl font-bold shadow-lg shadow-teal-500/30 flex items-center gap-2 transition"
+              >
+                <Sparkles className="w-5 h-5" />
+                Save to My Trips
+              </button>
+            )}
           </div>
         </div>
       </div>

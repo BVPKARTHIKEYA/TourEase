@@ -61,6 +61,16 @@ export const api = {
     });
   },
 
+  async getUserItineraries() {
+    return this.request('/itinerary/user');
+  },
+
+  async deleteItinerary(id) {
+    return this.request(`/itinerary/${id}`, {
+      method: 'DELETE',
+    });
+  },
+
   // ... (keep all other methods like generateTrip, etc.)
   async generateTrip(tripData) {
     return this.request('/trip/generate', {
