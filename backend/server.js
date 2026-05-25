@@ -11,10 +11,16 @@ const itineraryRoutes = require("./routes/itineraryRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 const weatherRoutes = require("./routes/weatherRoutes");
 const smartPlannerRoutes = require("./routes/smartPlannerRoutes");
+const tripRoutes = require("./routes/tripRoutes");
+const weatherRoutes = require("./routes/weatherRoutes");
+const chatRoutes = require("./routes/chatroutes");
+const expenseRoutes = require("./routes/expenseRoutes");
 
 dotenv.config();
 
 const app = express();
+
+app.use(helmet());
 
 app.use(cors());
 app.use(express.json());
