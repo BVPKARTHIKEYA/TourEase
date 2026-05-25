@@ -35,6 +35,7 @@ import TripPlanner from './pages/TripPlanner';
 import Footer from "./components/Footer";
 import WatchDemoPage from './pages/DemoSection';
 import DynamicPlannerPage from './pages/DynamicPlannerPage';
+import ScrollToTop from "./components/common/ScrollToTop";
 
 function ProtectedRoute({ children }) {
   const isAuthenticated = Boolean(localStorage.getItem("token"));
@@ -116,6 +117,7 @@ export default function App() {
     <ThemeProvider>
       <FavoritesProvider>
         <Router>
+          <ScrollToTop />
           <AppRoutes />
         </Router>
       </FavoritesProvider>
