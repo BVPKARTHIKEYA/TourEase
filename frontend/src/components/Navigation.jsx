@@ -38,7 +38,6 @@ export default function Navigation() {
     navigate("/login", { replace: true });
   };
 
-
   return (
     <>
       <style>{`
@@ -99,25 +98,27 @@ export default function Navigation() {
         }
       `}</style>
 
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-950 bg-gradient-to-b from-teal-50/50 to-transparent dark:from-gray-800/50 shadow-md border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-4 lg:px-8 flex flex-row gap-5">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-950 bg-linear-to-b from-teal-50/50 to-transparent dark:from-gray-800/50 shadow-md border-b border-gray-200 dark:border-gray-800">
+        <div className="max-w-7xl mx-auto flex h-16 w-full items-center gap-1 xl:gap-9 px-4 sm:px-4 lg:px-8">
           {/* LOGO */}
-            <div
-              onClick={handleLogoClick}
-              className="cursor-pointer flex items-center gap-2 group shrink-0"
-            >
-              <div className="relative flex items-center justify-center w-8 h-8">
-                <Globe className="w-8 h-8 text-teal-600 dark:text-cyan-400 group-hover:rotate-180 transition-transform duration-700" strokeWidth={1.5} />
-                <MapPin className="w-4 h-4 text-orange-500 absolute -top-1 -right-1 fill-orange-100 dark:fill-orange-900" />
-              </div>
-              <span className="text-2xl font-bold bg-linear-to-r from-teal-500 to-cyan-600 dark:from-cyan-400 dark:to-blue-500 bg-clip-text text-transparent">
-                TourEase
-              </span>
+          <div
+            onClick={handleLogoClick}
+            className="cursor-pointer flex items-center gap-2 group shrink-0"
+          >
+            <div className="relative flex items-center justify-center w-8 h-8">
+              <Globe
+                className="w-8 h-8 text-teal-600 dark:text-cyan-400 group-hover:rotate-180 transition-transform duration-700"
+                strokeWidth={1.5}
+              />
+              <MapPin className="w-4 h-4 text-orange-500 absolute -top-1 -right-1 fill-orange-100 dark:fill-orange-900" />
             </div>
-          <div className="flex h-16 items-center justify-between">
-
+            <span className="hidden lg:inline text-xl xl:text-2xl font-bold bg-linear-to-r from-teal-500 to-cyan-600 dark:from-cyan-400 dark:to-blue-500 bg-clip-text text-transparent">
+              TourEase
+            </span>
+          </div>
+          <div className="flex flex-1 min-w-0 items-center justify-between gap-0.3">
             {/* DESKTOP NAV */}
-            <div className="hidden md:flex items-center gap-2 flex-1 justify-center px-8">
+            <div className="hidden xl:flex min-w-0 flex-1 items-center justify-center gap-1 px-2 xl:px-4">
               {navItems.map((item, index) => {
                 const hoverColors = [
                   "hover:bg-cyan-100 dark:hover:bg-cyan-900/30",
@@ -127,16 +128,18 @@ export default function Navigation() {
                   "hover:bg-orange-100 dark:hover:bg-orange-900/30",
                   "hover:bg-indigo-100 dark:hover:bg-indigo-900/30",
                   "hover:bg-violet-100 dark:hover:bg-violet-900/30",
-                  "hover:bg-amber-100 dark:hover:bg-amber-900/30"
+                  "hover:bg-amber-100 dark:hover:bg-amber-900/30",
                 ];
+                const isSecondaryDesktopItem = index >= 5;
                 return (
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`px-3 py-2 rounded-lg font-semibold whitespace-nowrap text-base transition-all ${isActive(item.path)
-                      ? "bg-teal-500 dark:bg-indigo-600 text-white"
-                      : `text-gray-700 dark:text-gray-300 ${hoverColors[index]}`
-                      }`}
+                    className={`px-3 py-2 rounded-lg font-semibold whitespace-nowrap text-sm transition-all ${isSecondaryDesktopItem ? "hidden 2xl:inline-flex" : "inline-flex"} ${
+                      isActive(item.path)
+                        ? "bg-teal-500 dark:bg-indigo-600 text-white"
+                        : `text-gray-700 dark:text-gray-300 ${hoverColors[index]}`
+                    }`}
                   >
                     {item.label}
                   </Link>
@@ -144,13 +147,14 @@ export default function Navigation() {
               })}
               <Link
                 to="/favorites"
-                className={`group relative px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap text-base transition ${isActive("/favorites")
-                  ? "bg-teal-500 dark:bg-indigo-600 text-white"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-red-100 dark:hover:bg-red-900/30"
-                  }`}
+                className={`group relative px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap text-base transition ${
+                  isActive("/favorites")
+                    ? "bg-teal-500 dark:bg-indigo-600 text-white"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-red-100 dark:hover:bg-red-900/30"
+                }`}
               >
                 <Heart className="w-5 h-5 transition-colors group-hover:text-red-500 group-hover:fill-red-500" />
-                Favorites
+                Fav
                 {favoriteIds.length > 0 && (
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 bg-red-500 text-white text-xs px-2 h-5 min-w-7 rounded-full inline-flex items-center justify-center">
                     {favoriteIds.length}
@@ -160,8 +164,7 @@ export default function Navigation() {
             </div>
 
             {/* RIGHT ACTIONS */}
-            <div className="flex items-center gap-4 shrink-0">
-
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
               {/* THEME TOGGLE */}
               <button
                 onClick={toggleTheme}
@@ -179,17 +182,20 @@ export default function Navigation() {
                 )}
               </button>
 
+              <LanguageSelector variant="inline" className="hidden 2xl:block" />
+
               {/* CTA */}
               {!isLoggedIn ? (
                 <Link
                   to="/login"
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold transition items-center w-33"
+                  className="hidden 2xl:inline-flex bg-orange-500 hover:bg-orange-600 text-white px-4 sm:px-5 py-2 rounded-lg font-semibold transition items-center whitespace-nowrap"
                 >
-                  Get Started</Link>
+                  Get Started
+                </Link>
               ) : (
                 <button
                   onClick={handleLogout}
-                  className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg font-semibold transition whitespace-nowrap text-base shadow-lg hover:shadow-xl"
+                  className="hidden 2xl:inline-flex bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg font-semibold transition whitespace-nowrap text-base shadow-lg hover:shadow-xl"
                 >
                   Logout
                 </button>
@@ -198,7 +204,7 @@ export default function Navigation() {
               {/* MOBILE MENU BUTTON */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 text-gray-900 dark:text-white"
+                className="xl:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 text-gray-900 dark:text-white"
               >
                 {isOpen ? (
                   <X className="w-6 h-6" />
@@ -214,7 +220,7 @@ export default function Navigation() {
       {/* MOBILE MENU BACKDROP */}
       <div
         className={`
-          fixed inset-0 z-30 md:hidden
+          fixed inset-0 z-30 xl:hidden
           bg-black/50 backdrop-blur-sm
           ${isOpen ? "backdrop-open pointer-events-auto" : "backdrop-close pointer-events-none"}
         `}
@@ -224,7 +230,7 @@ export default function Navigation() {
       {/* MOBILE MENU DRAWER */}
       <div
         className={`
-          fixed inset-y-0 right-0 z-40 md:hidden
+          fixed inset-y-0 right-0 z-40 xl:hidden
           w-72 bg-white dark:bg-gray-800 shadow-2xl border-l border-gray-200 dark:border-gray-700
           ${isOpen ? "menu-open" : "menu-close"}
         `}
@@ -254,21 +260,22 @@ export default function Navigation() {
                 "hover:bg-orange-100 dark:hover:bg-orange-900/40",
                 "hover:bg-indigo-100 dark:hover:bg-indigo-900/40",
                 "hover:bg-violet-100 dark:hover:bg-violet-900/40",
-                "hover:bg-amber-100 dark:hover:bg-amber-900/40"
+                "hover:bg-amber-100 dark:hover:bg-amber-900/40",
               ];
               return (
                 <Link
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`block px-5 py-4 rounded-2xl font-semibold text-base transition-all duration-200 ${isActive(item.path)
-                    ? "bg-linear-to-r from-teal-500 to-cyan-600 dark:from-indigo-500 dark:to-purple-600 text-white shadow-lg"
-                    : `text-gray-700 dark:text-gray-100 ${mobileHoverColors[index]}`
-                    }`}
+                  className={`block px-5 py-4 rounded-2xl font-semibold text-base transition-all duration-200 ${
+                    isActive(item.path)
+                      ? "bg-linear-to-r from-teal-500 to-cyan-600 dark:from-indigo-500 dark:to-purple-600 text-white shadow-lg"
+                      : `text-gray-700 dark:text-gray-100 ${mobileHoverColors[index]}`
+                  }`}
                   style={{
                     animation: isOpen
                       ? `slideInRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${0.05 * (index + 1)}s backwards`
-                      : "none"
+                      : "none",
                   }}
                 >
                   {item.label}
@@ -276,18 +283,23 @@ export default function Navigation() {
               );
             })}
 
+            <div className="pt-2 xl:hidden">
+              <LanguageSelector variant="inline" className="w-full" />
+            </div>
+
             {/* Favorites */}
             <Link
               to="/favorites"
               onClick={() => setIsOpen(false)}
-              className={`group relative px-5 py-4 rounded-2xl font-semibold flex items-center gap-3 text-base transition-all duration-200 ${isActive("/favorites")
-                ? "bg-linear-to-r from-teal-500 to-cyan-600 dark:from-indigo-500 dark:to-purple-600 text-white shadow-lg"
-                : "text-gray-700 dark:text-gray-100 hover:bg-red-100 dark:hover:bg-red-900/40"
-                }`}
+              className={`group relative px-5 py-4 rounded-2xl font-semibold flex items-center gap-3 text-base transition-all duration-200 ${
+                isActive("/favorites")
+                  ? "bg-linear-to-r from-teal-500 to-cyan-600 dark:from-indigo-500 dark:to-purple-600 text-white shadow-lg"
+                  : "text-gray-700 dark:text-gray-100 hover:bg-red-100 dark:hover:bg-red-900/40"
+              }`}
               style={{
                 animation: isOpen
                   ? `slideInRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s backwards`
-                  : "none"
+                  : "none",
               }}
             >
               <Heart className="w-5 h-5 shrink-0 transition-colors group-hover:text-red-500 group-hover:fill-red-500" />
@@ -306,7 +318,7 @@ export default function Navigation() {
             style={{
               animation: isOpen
                 ? `slideInRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.35s backwards`
-                : "none"
+                : "none",
             }}
           >
             {!isLoggedIn ? (
